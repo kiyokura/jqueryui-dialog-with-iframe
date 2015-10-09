@@ -1,0 +1,26 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script>
+  var args;
+  $(function (){
+    var parentWin = window.parent;
+    args = parentWin.MyDialogArguments["child-dialog"];
+    $("#text-from-parent").text(args.value);
+    $("#btn-ok").click(function (){
+      args.onCommitCalback($("#text-form").val());
+    });
+    $("#btn-cancel").click(function (){
+      args.onCancelCalback();
+    });
+   });
+  </script>
+</head>
+<body>
+  Value to passed from opener:<span id="text-from-parent"></span><br />
+  Value to pass to opener:<input type="text" value="" id="text-form" /><br />
+  <input type="button" value="Commit" id="btn-ok" /><input type="button" value="Cancel" id="btn-cancel" /><br />
+</body>
+</html>
