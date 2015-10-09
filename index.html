@@ -1,0 +1,49 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>open remote page in dialog using jquery-ui & iframe</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script>
+    // In order to see from within the iframe
+    var MyDialogArguments = new Array();
+    
+    $(function (){
+      $("#dialog").dialog({
+        autoOpen: false,
+        modal:true,
+        title:"dialog - remote",
+        close: function(){
+          $("#iframe").attr({ src: "about:blank"});
+        }
+      });
+      
+      $("#btnOpen").click(function (){
+        MyDialogArguments["child-dialog"] = {
+          value : $("#text").val(),
+          onCommitCalback : function (val){
+            $("#dialog").dialog("close");
+            alert('cloce by commit：' + val);
+          },
+          onCancelCalback : function (){
+            $("#dialog").dialog("close");
+            alert('cloce by cancel');
+          }
+        };
+        $("#iframe").attr({ src: "child.html"});
+        $("#dialog").dialog("open");
+      });
+    });
+  </script>
+</head>
+<body>
+  Value to pass to dialog：<input type="text" value="" id="text" /><br />
+  <input type="button" value="Open Dialog" id="btnOpen" />
+  <div id="dialog">
+    <iframe src="" id="iframe" style="margin:0;padding:0;border:0;">
+    </iframe>
+  <div>
+</body>
+</html>
